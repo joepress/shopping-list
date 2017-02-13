@@ -17,24 +17,19 @@ var liTemplate = '<li>' +
 		
 		
 function addItem (state, item) {
-	state.items.push({
-		displayName:item,
-		checkedOff: false
-	});
+	state.items.push(item);
 }
  
  
-function deleteItem (state,itemIndex){
+function deleteItem (state,element){
+	var itemIndex = state.items.indexOf(element.text());
 	state.items.splice(itemIndex,1);
 
 }
 
 function renderItem(item, liTemplate) {
   var liElement = $(liTemplate);
-  liElement.find('.shopping-item').text(item.displayName);
-		if (item.checkedOff) {
-    liElement.find('.shopping-item').addClass('shopping-item__checked');
-  }
+  liElement.find('.shopping-item').text(item);		
   return liElement;
 }
 
@@ -58,15 +53,15 @@ $('#js-shopping-list-form').submit(function(event) {
 		this.reset()
 	});
 
-$('#shopping-list-form').on('click','.shopping-item-delete', function(event) {
+$('ul').on('click','.shopping-item-delete', function(event) {
 	  event.preventDefault();
-		deleteItem(state,$(event.currentTarget.closest('li').find('.shopping-item')));
+		deleteItem(state,$(this).closest('li').find('.shopping-item'));
 		renderList(state,$('.shopping-list'));
   });	
 	
 $('ul').on('click','.shopping-item-toggle',function(event){
 	event.preventDefault();
-	$('.shopping-item').toggleClass('shopping-item__checked');
+	$(this).closest('li').find('.shopping-item').toggleClass('shopping-item__checked');
 	
  });
 	
