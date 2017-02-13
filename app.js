@@ -1,7 +1,8 @@
-
 var state = {
 	items: []
 };
+
+
 var liTemplate = '<li>' +
 	'<span class="shopping-item"></span>' +
 	'<div class="shopping-item-controls">' +
@@ -13,32 +14,27 @@ var liTemplate = '<li>' +
           '</button>' +
         '</div>' +
 		'</li>';
+		
+		
 function addItem (state, item) {
 	state.items.push({
-		name:item,
+		displayName:item,
 		checkedOff: false
 	});
 }
  
+ 
 function deleteItem (state,itemIndex){
 	state.items.splice(itemIndex,1);
-}
 
-function getItem(state, itemIndex) {
-  return state.items[itemIndex];
-}
-
-function updateItem(state, itemIndex, newItemState) {
-  state.items[itemIndex] = newItemState;
 }
 
 function renderItem(item, liTemplate) {
   var liElement = $(liTemplate);
-  liElement.find('.shopping-item').text(item.name);
-  if (item.checkedOff) {
+  liElement.find('.shopping-item').text(item.displayName);
+		if (item.checkedOff) {
     liElement.find('.shopping-item').addClass('shopping-item__checked');
   }
-  liElement.find('.shopping-item-toggle')
   return liElement;
 }
 
@@ -49,49 +45,29 @@ function renderList (state,element){
 });
 	element.html(itemsHTML);
 }
+ 
+ 
+ 
+ 
+$(document).ready(function(){
 
-
-function handleItemAdd(formElement,state,shoppingList){
-	formElement.submit(function(event) {
+$('#js-shopping-list-form').submit(function(event) {
     event.preventDefault();
     addItem(state, $('#shopping-list-entry').val());
-    renderList(state,shoppingList);
+    renderList(state,$('.shopping-list'));
 		this.reset()
 	});
-}
 
-function handleItemDelete(state,shoppingList,deleteButton){
-	 shoppingList.on('click', deleteButton , function(event) {
-	  var itemIndex = parseInt($(this).closest('li'));
-		deleteItem(state,itemIndex);
-		renderList(state,shoppingList);
-  });
-}
-
-function handleChecks(state,checkButton){
-	$('.shopping-item-toggle').click(function(event){
-		var itemId = $(event.currentTarget.closest('li'))
-		var oldItem = getItem(state,itemId)
-		
-		updateItem(state,itemId, {
-			name:oldItem.name,
-			checkedOff: !oldItem.checkedOff
-		});
-		renderList(state,shoppingList);
-	});
-}
-
-
-
-$(document).ready(function(){
-var formElement = $('#js-shopping-list-form');
-var shoppingList = $('.shopping-list');
-var deleteButton = $('.shopping-item-delete');
-var checkButton = $('.shopping-item-toggle')
-
-handleItemAdd(formElement,state,shoppingList);
-//handleItemDelete(state,shoppingList,deleteButton);
-handleChecks(state,checkButton);
-
+$('#shopping-list-form').on('click','.shopping-item-delete', function(event) {
+	  event.preventDefault();
+		deleteItem(state,$(event.currentTarget.closest('li').find('.shopping-item')));
+		renderList(state,$('.shopping-list'));
+  });	
+	
+$('ul').on('click','.shopping-item-toggle',function(event){
+	event.preventDefault();
+	$('.shopping-item').toggleClass('shopping-item__checked');
+	
+ });
+	
 });
-
