@@ -4,8 +4,16 @@
   "description": "This repo contains starter files for the *Shopping List App* challenge in Thinkful's Front End Web Development course.",
   "main": "app.js",
   "scripts": {
-    
-  },
+		"build:js": "npm run build:js:unminified && npm run build:js:minified",
+    "watch:js": "npm run watch:js:unminified & npm run watch:js:minified",
+    "clean:js": "npm run clean:js:unminified && npm run clean:js:minified",
+    "build:js:unminified": "npm run clean:js:unminified && webpack",
+    "watch:js:unminified": "npm run build:js:unminified && webpack --watch",
+    "clean:js:unminified": "rm -f build/$npm_package_name.$npm_package_version.js build/$npm_package_name.$npm_package_version.js.map",
+    "build:js:minified": "npm run clean:js:minified && webpack --minify",
+    "watch:js:minified": "npm run build:js:minified && webpack --watch --minify",
+    "clean:js:minified": "rm -f build/$npm_package_name.$npm_package_version.min.js build/$npm_package_name.$npm_package_version.min.js.map"
+	},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/joepress/shopping-list.git"
@@ -16,5 +24,8 @@
     "url": "https://github.com/joepress/shopping-list/issues"
   },
   "homepage": "https://github.com/joepress/shopping-list#readme",
-  "keywords": []
+  "keywords": [],
+  "devDependencies": {
+    "uglify-js": "^3.0.15"
+  }
 }
