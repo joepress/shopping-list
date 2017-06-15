@@ -16,9 +16,9 @@ var liTemplate = '<li>' +
 		'</li>';
 		
 		
-function addItem (state, item) {
+addItem = (state, item) => {
 	state.items.push(item);
-}
+};
  
  
 function deleteItem (state,element){

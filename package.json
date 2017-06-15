@@ -1,0 +1,20 @@
+{
+  "name": "shopping-list",
+  "version": "1.0.0",
+  "description": "This repo contains starter files for the *Shopping List App* challenge in Thinkful's Front End Web Development course.",
+  "main": "app.js",
+  "scripts": {
+    
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joepress/shopping-list.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joepress/shopping-list/issues"
+  },
+  "homepage": "https://github.com/joepress/shopping-list#readme",
+  "keywords": []
+}
